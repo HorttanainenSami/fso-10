@@ -9,7 +9,7 @@ const Button = ({handlePress, text, style}) => {
   const initialStyle = [styles.button, style];
   return(
     <Pressable style={initialStyle} onPress={handlePress}>
-    <Text style={{flexGrow:0}} color='textWhite'>
+    <Text color='textWhite'>
         {text}
       </Text>
     </Pressable>

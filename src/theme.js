@@ -13,6 +13,7 @@ const theme = {
     height: 50,
     width: 50,
     borderRadius: 5,
+    marginBottom: 50,
   },
   fontSizes: {
     body: 14,

@@ -19,15 +19,15 @@ const ItemSeparator = () =>  <View style={styles.separator}/>;
 const renderItem = ({item}) => {
   return(
     <View style = {styles.item}>
-    <View style= {{display: 'flex', flexDirection: 'row'}}>
+    <View style= {{flexDirection: 'row'}}>
     <Image style = {{...theme.tinyLogo, flexGrow: 0 }} source = {{uri: item.ownerAvatarUrl}} />
-    <View style= {{ margin:5, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+    <View style= {{ margin:5, alignItems: 'flex-start' }}>
     <Text fontWeight='bold' >{item.fullName} </Text>
     <Text color='textSecondary'>{item.description} </Text>
     <Text color='textWhite' style={{ flexGrow: 0, padding: 5, borderRadius:5,  backgroundColor: theme.colors.primary}}>{item.language} </Text>
         </View>
       </View>
-    <View style = {{display: 'flex', flexDirection:'row', justifyContent:'space-between'}}>
+    <View style = {{flexDirection:'row', justifyContent:'space-between'}}>
       <CountAndDescription count={item.stargazersCount} text='stars' />
       <CountAndDescription count={item.forksCount} text='forks' />
       <CountAndDescription count={item.reviewCount} text='Reviews' />

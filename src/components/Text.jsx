@@ -7,7 +7,11 @@ const styles = StyleSheet.create({
     color: theme.colors.textPrimary,
     fontSize: theme.fontSizes.body,
     fontWeight: theme.fontWeights.normal,
-    fontFamily: theme.fonts.main,
+    fontFamily: Platform.select({
+      android: theme.fonts.android,
+      ios: theme.fonts.ios,
+      default: theme.fonts.main,
+    }),
   },
   colorTextSecondary: {
     color: theme.colors.textSecondary,
@@ -39,10 +43,6 @@ const Text = ({color, fontSize, fontWeight, style, ...props}) => {
     color === 'textError' && styles.colorTextError,
     fontSize === 'subheading' && styles.fontSizeTextSecondary,
     fontWeight === 'bold' && styles.fontBoldText,
-    Platform.OS === 'android' && styles.fontFamily.andoid,
-    Platform.OS === 'ios' && styles.fontFamily.ios,
-    
-
     style,
   ];
   return <NativeText style={textStyle} {...props} />;
