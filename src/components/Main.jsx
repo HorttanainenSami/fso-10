@@ -5,6 +5,7 @@ import RepositoryList from '../tabs/RepositoryList';
 import AppBar from './AppBar';
 import SignIn from '../tabs/SignInView';
 
+
 const styles = StyleSheet.create({
     container: {
       flexGrow: 1,
