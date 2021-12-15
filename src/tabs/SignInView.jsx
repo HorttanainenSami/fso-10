@@ -5,7 +5,8 @@ import FormikTextInput from '../components/FormikTextInput';
 import Button from '../components/Button';
 import * as yup from 'yup';
 import useSignIn from '../hooks/useSignIn';
-import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router';
+import AuthStorageContext from '../contexts/authStorageContext';
 
 const initialValues = {
   username:'',
@@ -35,15 +36,16 @@ const SigninForm = ({onSubmit}) => {
 };
 const SignIn = () => {
   let history = useHistory();
-  const {login} = useSignIn();
+  const [login] = useSignIn();
+  const auth = React.useContext(AuthStorageContext);
 
   const onPress = async (values) => {
     const username = values.username;
     const password = values.password;
 
     try{
-      await login({username, password});
-      console.log(history);
+      const { data } = await login({username, password});
+      await auth.setAccessToken(data.authorize.accessToken);
       history.push('/');
     } catch (e) {
       console.log(e);

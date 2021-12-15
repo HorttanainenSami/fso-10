@@ -1,9 +1,11 @@
 import React from 'react';
-import { View, Pressable, StyleSheet, ScrollView } from 'react-native';
-import Text from './Text';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
 import theme from '../theme';
-import { Link } from 'react-router-native';
+import AppBarTab from './AppBarTab';
+import { useQuery } from '@apollo/client';
+import { GET_AUTHORIZED_USER } from '../gql/queries';
+import useSignIn from '../hooks/useSignIn';
 
 
 const styles = StyleSheet.create({
@@ -15,43 +17,34 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       padding: 10,
     },
-    pressable:{
-      margin: 5,
-    }
 });
-const AppBar = () => (
-  <View style={styles.container}>
-    <ScrollView horizontal>
-      <Pressable style={({pressed}) => [
-        styles.pressable,
-        { 
-          backgroundColor: pressed ? 
-          theme.colors.buttonPrimary :
-          theme.colors.backGroundPrimary},
-        ]
-          
-        }>
-        <Link to ='/'>
-          <Text color='textWhite'>
-              Repositories
-          </Text>
-        </Link>
-      </Pressable>
-      <Pressable style={({pressed}) => [
-        styles.pressable,
-        { 
-          backgroundColor: pressed ? 
-          theme.colors.buttonPrimary :
-          theme.colors.backGroundPrimary}]
-        } >
-        <Link to='/signin' >
-          <Text color='textWhite'>
-            Sign in
-          </Text>
-        </Link>
-      </Pressable>
-    </ScrollView>
-  </View>
-);
+const AppBar = () => {
+  const [,logout ] = useSignIn();
+  const { data } = useQuery(GET_AUTHORIZED_USER);
+  const [ userLoggedin, setUserLoggedIn] = React.useState(false);
+  React.useEffect(() => {
+    if(data?.authorizedUser){
+      setUserLoggedIn(true);
+    } else {
+      setUserLoggedIn(false);
+    }
+
+  }, [data]);
+  const signOut =async () => {
+    await logout();  
+  };
+  return(
+    <View style={styles.container}>
+      <ScrollView horizontal>
+        <AppBarTab text='Repositories' link='/' />
+        { userLoggedin 
+          ? <AppBarTab text='Sing out' link='/' onPress={signOut} />
+          :<AppBarTab text='Sign in' link='/signin' /> 
+        }
+      </ScrollView>
+    </View>
+  );
+};
+
 
 export default AppBar;

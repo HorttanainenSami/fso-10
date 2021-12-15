@@ -2,22 +2,33 @@ import { AUTHORIZE_USER } from '../gql/mutation';
 import { useContext } from 'react';
 import AuthStorageContext from '../contexts/authStorageContext';
 import { useMutation } from '@apollo/client';
+import { useApolloClient } from '@apollo/client';
 
 
 const useSignIn = () => {
+  const apolloClient = useApolloClient();
   const authStorage = useContext(AuthStorageContext);
-  const [ authorizeUser, {error} ] = useMutation(AUTHORIZE_USER);
+  const [ mutation, result ] = useMutation(AUTHORIZE_USER);
+  
+  const logout = async () => {
+    await authStorage.deleteAccessToken();
+    apolloClient.resetStore();
+    return;
+  };
 
-  const login =async ({username, password}) => {
+  const login = async ({username, password}) => {
     const credentials = { username, password};
-
-    const payload = await authorizeUser({ variables: {credentials}});
-    const token = payload.data.authorize.accessToken;
-    await authStorage.setAccessToken(token);
-    return token;
+    const payload = await mutation({ variables: {credentials}});
+    try {
+      await authStorage.setAccessToken(payload.data.authorize.accessToken);
+    } catch (e) {
+      console.log(e);
+    }
+    apolloClient.resetStore();
+    return payload;
    };
 
-  return { login, error };
+  return [ login, logout, result];
 };
 
 
