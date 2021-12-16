@@ -16,31 +16,30 @@ const styles = StyleSheet.create({
 
 
 const ItemSeparator = () =>  <View style={styles.separator}/>;
+
 const renderItem = ({item}) => {
   return(
-    <View style = {styles.item}>
-    <View style= {{flexDirection: 'row'}}>
-    <Image style = {{...theme.tinyLogo, flexGrow: 0 }} source = {{uri: item.ownerAvatarUrl}} />
-    <View style= {{ margin:5, alignItems: 'flex-start' }}>
-    <Text fontWeight='bold' >{item.fullName} </Text>
-    <Text color='textSecondary'>{item.description} </Text>
-    <Text color='textWhite' style={{ flexGrow: 0, padding: 5, borderRadius:5,  backgroundColor: theme.colors.primary}}>{item.language} </Text>
+    <View style={styles.item}>
+      <View style= {{flexDirection: 'row'}}>
+        <Image style = {{...theme.tinyLogo, flexGrow: 0 }} source = {{uri: item.ownerAvatarUrl}} />
+        <View style= {{ margin:5, alignItems: 'flex-start' }}>
+          <Text testID='repositoryName' fontWeight='bold' >{item.fullName} </Text>
+          <Text testID='description' color='textSecondary'>{item.description} </Text>
+          <Text testID='language' color='textWhite' style={{ flexGrow: 0, padding: 5, borderRadius:5,  backgroundColor: theme.colors.primary}}>{item.language} </Text>
         </View>
       </View>
     <View style = {{flexDirection:'row', justifyContent:'space-between'}}>
-      <CountAndDescription count={item.stargazersCount} text='stars' />
-      <CountAndDescription count={item.forksCount} text='forks' />
-      <CountAndDescription count={item.reviewCount} text='Reviews' />
-      <CountAndDescription count={item.ratingAverage} text='Rating' />
+      <CountAndDescription testID='stargazers' count={item.stargazersCount} text='Stars' />
+      <CountAndDescription testID='forks' count={item.forksCount} text='Forks' />
+      <CountAndDescription testID='reviews' count={item.reviewCount} text='Reviews' />
+      <CountAndDescription testID='ratings' count={item.ratingAverage} text='Rating' />
       </View>
     </View>
   );
 };
 
-const RepositoryList = () => {
-  const {repositories} = useRepositories();
-  const repositoryEdges = repositories ? repositories.data?.repositories?.edges.map(edge => edge.node): [];
-
+export const RepositoryListContainer = ({repositories}) => {
+  const repositoryEdges = repositories ? repositories.edges.map(edge => edge.node): [];
   return (
     <FlatList
       data={repositoryEdges}
@@ -50,6 +49,11 @@ const RepositoryList = () => {
       // other props
     />
   );
+};
+const RepositoryList = () => {
+  const {data } = useRepositories();
+
+  return <RepositoryListContainer repositories={data?.repositories} />;
 };
 
 export default RepositoryList;

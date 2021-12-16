@@ -11,12 +11,16 @@ function abbreviateNumber(number){
     // format number and add suffix
     return Number(tier.toFixed(1)) + 'k';
 }
-const CountAndDescription = ({count, text}) => {
+const CountAndDescription = ({count, text, testID} ) => {
     const number = abbreviateNumber(count);
     return(
-    <View style = {{display: 'flex', flexDirection:'column', alignItems: 'center'}}>
-       <Text>{number}</Text>
-      <Text> {text} </Text> 
+    <View style = {{display: 'flex', flexDirection:'column', alignItems: 'center'}} >
+      <Text testID={`${testID}count`}>
+        {number}
+      </Text>
+      <Text testID={`${testID}text`}>
+        {text}
+      </Text> 
     </View>);
 
 };
