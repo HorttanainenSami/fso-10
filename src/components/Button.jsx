@@ -7,10 +7,10 @@ const styles = StyleSheet.create({
   button: theme.button,
 });
 
-const Button = ({handlePress, text, style}) => {
+const Button = ({handlePress, text, style, ...props}) => {
   const initialStyle = [styles.button, style];
   return(
-    <Pressable style={initialStyle} onPress={handlePress}>
+    <Pressable testID={props.testID} style={initialStyle} onPress={handlePress}>
       <Text color='textWhite'>
         {text}
       </Text>

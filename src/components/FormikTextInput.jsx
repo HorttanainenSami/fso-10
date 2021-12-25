@@ -17,7 +17,7 @@ const FormikTextInput = ({name, style, ...props}) => {
         style={style}
         {...props}
       />
-      {showError && <Text color='textError'> {showError} </Text>}
+      {showError && <Text testID={`${props.testID}error`} color='textError'> {showError} </Text>}
     </>
   );
 };

@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-native';
 import RepositoryList from '../tabs/RepositoryList';
 import AppBar from './AppBar';
 import SignIn from '../tabs/SignInView';
+import SingleRepository from './SingleRepository';
 
 
 const Main = () =>{
@@ -16,6 +17,9 @@ const Main = () =>{
           </Route>
           <Route path='/' exact>
             <RepositoryList />
+          </Route>
+          <Route path='/repository/:id'>
+            <SingleRepository /> 
           </Route>
           <Redirect to='/' />
         </Switch>

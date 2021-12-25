@@ -1,6 +1,6 @@
 import React from 'react';
 import { View } from 'react-native';
-import Text from './Text';
+import Text from '../../components/Text';
 
 function abbreviateNumber(number){
 
@@ -14,7 +14,7 @@ function abbreviateNumber(number){
 const CountAndDescription = ({count, text, testID} ) => {
     const number = abbreviateNumber(count);
     return(
-    <View style = {{display: 'flex', flexDirection:'column', alignItems: 'center'}} >
+    <View style = {{flexDirection:'column', alignItems: 'center'}} >
       <Text testID={`${testID}count`}>
         {number}
       </Text>

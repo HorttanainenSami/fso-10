@@ -27,16 +27,29 @@ const validationSchema = yup.object().shape({
 });
 const SigninForm = ({onSubmit}) => {
   return(
-    <View style={{display:'flex'}}>
-      <FormikTextInput name='username' placeholder='username'/>
-      <FormikTextInput name='password' placeholder='password' secureTextEntry={true}/>
-      <Button handlePress={onSubmit} text='Sign in' />
+    <View>
+      <FormikTextInput testID='username' name='username' placeholder='username'/>
+      <FormikTextInput testID='password' name='password' placeholder='password' secureTextEntry={true}/>
+      <Button testID='submitButton' handlePress={onSubmit} text='Sign in' />
     </View>
   );
 };
+export const SignInContainer = ({onPress}) => {
+
+  return (
+  <Formik 
+    initialValues={initialValues} 
+    onSubmit={onPress} 
+    validationSchema={validationSchema}
+    >
+    {({handleSubmit}) =><SigninForm onSubmit={handleSubmit}/>}
+  </Formik>
+  );
+};
 const SignIn = () => {
-  let history = useHistory();
   const [login] = useSignIn();
+
+  let history = useHistory();
   const auth = React.useContext(AuthStorageContext);
 
   const onPress = async (values) => {
@@ -51,16 +64,7 @@ const SignIn = () => {
       console.log(e);
     }
   };
-
-  return (
-  <Formik 
-    initialValues={initialValues} 
-    onSubmit={onPress} 
-    validationSchema={validationSchema}
-    >
-    {({handleSubmit}) =><SigninForm onSubmit={handleSubmit}/>}
-  </Formik>
-  );
+  return <SignInContainer onPress={onPress} login={login} />;
 };
 
 export default SignIn;
