@@ -8,6 +8,7 @@ const theme = {
     appbarbackgroundPrimary: '#24292e',
     backgroundSecondary: '#e1e4e8',
     buttonPrimary: '#4D4D4D',
+    seperator: '#DCDCDC',
   },
   tinyLogo: {
     height: 50,

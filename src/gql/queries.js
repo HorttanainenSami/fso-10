@@ -37,7 +37,6 @@ export const GET_REPOSITORY = gql`
     repository(id: $id) {
       id,
       name,
-      ownerName,
       createdAt,
       fullName,
       reviewCount,
@@ -48,6 +47,20 @@ export const GET_REPOSITORY = gql`
       language,
       ownerAvatarUrl,
       url,
+      reviews {
+        edges {
+          node {
+            id
+            text
+            rating
+            createdAt
+            user {
+              id
+              username
+            }
+          }
+        }
+      }
     }
   }
 `;
