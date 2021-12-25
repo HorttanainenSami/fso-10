@@ -86,8 +86,10 @@ const SingleRepositoryContainer = ({repository, reviews}) => {
   );
 };
 const SingleRepository = () => {
+  const [ getRepository, result] = useLazyQuery(GET_REPOSITORY, {
+    fetchPolicy: 'cache-and-network'
+  });
   const id = useParams().id;
-  const [ getRepository, result] = useLazyQuery(GET_REPOSITORY);
   const [ item, setItem ] = React.useState();
    
   React.useEffect(() => {
