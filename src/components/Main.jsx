@@ -6,6 +6,7 @@ import AppBar from './AppBar';
 import SignIn from '../tabs/SignInView';
 import SingleRepository from './SingleRepository';
 import CreateReview from '../tabs/CreateReview';
+import SignUp from '../tabs/SignUp';
 
 
 const Main = () =>{
@@ -24,6 +25,9 @@ const Main = () =>{
           </Route>
           <Route path='/createReview'>
             <CreateReview /> 
+          </Route>
+          <Route path='/signup'>
+            <SignUp /> 
           </Route>
           <Redirect to='/' />
         </Switch>

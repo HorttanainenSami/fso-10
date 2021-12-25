@@ -30,7 +30,7 @@ const AppBar = () => {
     }
 
   }, [data]);
-  const signOut =async () => {
+  const logOut =async () => {
     await logout();  
   };
   return(
@@ -40,9 +40,12 @@ const AppBar = () => {
         { userLoggedin 
           ? <>
               <AppBarTab text='Create review' link='/createReview' />
-              <AppBarTab text='Sing out' link='/' onPress={signOut} />
+              <AppBarTab text='Log out' link='/' onPress={logOut} />
             </>
-          :<AppBarTab text='Sign in' link='/signin' /> 
+          : <>
+              <AppBarTab text='Sign in' link='/signin' /> 
+              <AppBarTab text='Sign up' link='/signup' />
+            </>
         }
       </ScrollView>
     </View>
