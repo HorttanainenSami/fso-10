@@ -3,13 +3,13 @@ import { gql } from '@apollo/client';
 export const GET_REPOSITORIES = gql`
 # Write your query or mutation here
 query(
-  $seachKeyword: String
+  $searchKeyword: String
   $orderBy: AllRepositoriesOrderBy
   $orderDirection: OrderDirection
 ) {
 
   repositories(
-    searchKeyword: $seachKeyword
+    searchKeyword: $searchKeyword
     orderBy: $orderBy
     orderDirection: $orderDirection
   ) {
