@@ -7,7 +7,7 @@ import SignIn from '../tabs/SignInView';
 import SingleRepository from './SingleRepository';
 import CreateReview from '../tabs/CreateReview';
 import SignUp from '../tabs/SignUp';
-import Reviews from '../tabs/Reviews';
+import Reviews from '../tabs/Review';
 
 
 const Main = () =>{

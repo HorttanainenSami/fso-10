@@ -1,8 +1,8 @@
 import React from 'react';
-import useAuthorizedUser from '../hooks/useAuthorizedUser';
+import useAuthorizedUser from '../../hooks/useAuthorizedUser';
 import { FlatList, View, StyleSheet } from 'react-native';
-import Review from '../components/Review';
-import theme from '../theme';
+import ReviewActions from './ReviewActions';
+import theme from '../../theme';
 
 const styles = StyleSheet.create({
   separator: {
@@ -10,27 +10,23 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.seperator,
   },
 });
-const renderItem = ({item}) => {
-  console.log(item);
 
-  return item? <Review rating={item.rating} header={item.repository.fullName} date={item.createdAt} text={item.text} />: <></>;
+const RenderItem = ({item, refetch}) => {
+  return item? <ReviewActions refetch={refetch} item={item} />: <></>;
 };
 const  ItemSeparator = () => <View style={styles.separator} />;
 
 const Reviews = () => {
   const fetchReviews = true;
-  const { data } = useAuthorizedUser(fetchReviews);
+  const { data, refetch } = useAuthorizedUser(fetchReviews);
 
-  React.useEffect( () => {
-    console.log(data);
-  }, [data]);
-  const reviewEdges = data!=undefined 
+  const reviewEdges = data
     ? data?.authorizedUser.reviews.edges.map(edge => edge.node)
     : [];
   return( 
       <FlatList
         data={reviewEdges} 
-        renderItem={renderItem }
+    renderItem={({item}) => <RenderItem refetch={refetch} item={item} /> }
         ItemSeparatorComponent={ItemSeparator}
     />
   );

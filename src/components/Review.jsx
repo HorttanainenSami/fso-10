@@ -30,9 +30,10 @@ const styles = StyleSheet.create({
   },
 
 });
-const Review = ({ rating, header, date, text}) => {
+const Review = ({ rating, header, date, text, style}) => {
+  const initialStyle = [styles.grid, style];
   return( 
-    <View style={styles.grid}>
+    <View style={initialStyle}>
       <Text fontWeight='bold' style={styles.reviewSymbol}>
         {rating}
       </Text>

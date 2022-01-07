@@ -83,7 +83,7 @@ export const GET_REPOSITORY = gql`
       language,
       ownerAvatarUrl,
       url,
-      reviews {
+        reviews(first:3) {
         edges {
           node {
             id
