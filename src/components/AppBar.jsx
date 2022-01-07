@@ -3,8 +3,7 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import Constants from 'expo-constants';
 import theme from '../theme';
 import AppBarTab from './AppBarTab';
-import { useQuery } from '@apollo/client';
-import { GET_AUTHORIZED_USER } from '../gql/queries';
+import useAuthorizedUser  from '../hooks/useAuthorizedUser';
 import useSignIn from '../hooks/useSignIn';
 
 
@@ -20,9 +19,10 @@ const styles = StyleSheet.create({
 });
 const AppBar = () => {
   const [,logout ] = useSignIn();
-  const { data } = useQuery(GET_AUTHORIZED_USER);
+  const { data } = useAuthorizedUser();
   const [ userLoggedin, setUserLoggedIn] = React.useState(false);
   React.useEffect(() => {
+    console.log(data);
     if(data?.authorizedUser){
       setUserLoggedIn(true);
     } else {
@@ -40,6 +40,7 @@ const AppBar = () => {
         { userLoggedin 
           ? <>
               <AppBarTab text='Create review' link='/createReview' />
+              <AppBarTab text='My reviews' link='/myreviews' />
               <AppBarTab text='Log out' link='/' onPress={logOut} />
             </>
           : <>

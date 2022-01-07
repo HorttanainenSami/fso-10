@@ -26,7 +26,7 @@ const renderItem = ({item}) => {
   );
 
 };
-const Seperator = ({sort, setSort } ) => {
+const Header = ({sort, setSort } ) => {
 
   const [searchQuery, setSearchQuery] = React.useState('');
   const [value] = useDebounce(searchQuery, 500);
@@ -63,18 +63,16 @@ export const RepositoryListContainer = ({repositories, variables, setSortedBy}) 
     <FlatList
       data={repositoryEdges}
       ItemSeparatorComponent={ItemSeparator}
-      ListHeaderComponent={<Seperator sort={variables} setSort={setSortedBy} />}
+      ListHeaderComponent={<Header sort={variables} setSort={setSortedBy} />}
       renderItem = {renderItem}
       keyExtractor = {(item) => item.id}
+      onEndReached={() => console.log('end reached')}
     />
   );
 };
 const RepositoryList = () => {
   const [variables, setSortedBy ] = React.useState();
   const { data } = useRepositories(variables);
-  React.useEffect( () => {
-    console.log(variables);
-   }, [variables]);
   return <RepositoryListContainer sorted={variables} setSortedBy={setSortedBy} repositories={data?.repositories}  />;
 };
 

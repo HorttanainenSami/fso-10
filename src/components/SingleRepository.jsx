@@ -5,36 +5,10 @@ import { useParams } from 'react-router';
 import { GET_REPOSITORY } from '../gql/queries';
 import { useLazyQuery } from '@apollo/client';
 import LinkButton from './LinkButton';
-import Text from './Text';
 import theme from '../theme';
-import { format } from 'date-fns';
-
-
+import Review from './Review';
 
 const styles = StyleSheet.create({
-  grid : {
-    display:'grid',
-    gridTemplateRows:"auto auto auto",
-    gridTemplateColumns: "80px auto",
-    gridRowGap: 5,
-    padding: 5,
-  },
-  reviewSymbol: {
-    gridRowStart: '1',
-    gridRowEnd: '4',
-    color: theme.colors.primary,
-    borderColor:theme.colors.primary,
-    paddingTop: 20,
-    margin: 5,
-    borderWidth: 2,
-    borderRadius: '50%',
-    width: 60,
-    height: 60,
-    textAlign: 'center',
-  },
-  date: {
-    color: theme.colors.buttonPrimary,
-  },
   seperator : {
     backgroundColor: theme.colors.seperator,
     height:5,
@@ -44,27 +18,9 @@ const styles = StyleSheet.create({
 
 const ItemSeperator = () => <View style={styles.seperator} />;
 
-const RenderReview = ({review}) => {
-
-  return( 
-    <View style={styles.grid}>
-      <Text fontWeight='bold' style={styles.reviewSymbol}>
-        {review.rating}
-      </Text>
-      <Text>
-        {review.user.username}
-      </Text>
-      <Text style={styles.date}>
-        {format( new Date(review.createdAt), 'dd/MM/yyyy') }
-      </Text>
-      <Text>
-        {review.text}
-      </Text>
-    </View>
-  );
-
-
-};
+const RenderReview = ({item}) =>(
+  <Review rating={item.rating} header={item.user.username} date={item.createdAt} text={item.text} />
+);
 const RepositoryInfo = ({item}) => {
   return(
         <>
@@ -74,15 +30,22 @@ const RepositoryInfo = ({item}) => {
         </>
   );
 };
+
+
 const SingleRepositoryContainer = ({repository, reviews}) => {
+  const onEndReach = () => {
+    console.log('You have reached the end of list');
+  };
   return (
     <FlatList
       data = {reviews}
-      renderItem={({ item }) => <RenderReview review={item}/>}
+      renderItem={RenderReview}
       ListHeaderComponent = {() => <RepositoryInfo item={repository} />}
-      ItemSeparatorComponent ={ItemSeperator}>
+      ItemSeparatorComponent ={ItemSeperator}
+      onEndReached={onEndReach.bind(this)}
+      onEndReachedThreshold={0.5}
       keyExtractor = {(item) => item.id }
-    </FlatList>
+    />
   );
 };
 const SingleRepository = () => {

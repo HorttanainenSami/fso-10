@@ -40,15 +40,33 @@ query(
 }
 `;
 
-
 export const GET_AUTHORIZED_USER = gql`
-  query{
-    authorizedUser
-    {
-      username,
-      id
+query($review: Boolean!){
+  authorizedUser{
+    username,
+    id,
+     reviews @include(if: $review){
+      totalCount,
+      edges{
+        node{
+          id,
+          repository{
+            fullName
+          },
+          user {
+            id
+            username
+          }
+          repositoryId,
+          rating,
+          createdAt,
+          text
+        }
+      },
+      pageInfo{endCursor,hasNextPage}
     }
-  } `;
+  }
+}`;
 
 export const GET_REPOSITORY = gql`
   query($id: ID!) {

@@ -15,7 +15,6 @@ const useSignIn = () => {
     apolloClient.resetStore();
     return;
   };
-
   const login = async ({username, password}) => {
     const credentials = { username, password};
     const payload = await mutation({ variables: {credentials}});
